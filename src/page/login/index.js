@@ -14,11 +14,13 @@ class Login extends Component {
                 this.checkLogin(e)
             }} className="login">
                 <Row>
-                    <Col span={8} offset={8}>
+                    <Col xxl={{span: 8, offset: 8}} xl={{span: 8, offset: 8}} lg={{span: 12, offset: 6}}
+                         sm={{span: 18, offset: 4}} xs={{span: 20, offset: 2}}>
                         <Divider className="title">后台管理</Divider>
                     </Col></Row>
                 <Row>
-                    <Col span={8} offset={8}>
+                    <Col xxl={{span: 8, offset: 8}} xl={{span: 8, offset: 8}} lg={{span: 12, offset: 6}}
+                         sm={{span: 18, offset: 4}} xs={{span: 20, offset: 2}}>
                         <FormItem>
                             {getFieldDecorator('username', {
                                 rules: [{required: true, message: '请输入用户名'}],
@@ -30,7 +32,8 @@ class Login extends Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col span={8} offset={8}>
+                    <Col xxl={{span: 8, offset: 8}} xl={{span: 8, offset: 8}} lg={{span: 12, offset: 6}}
+                         sm={{span: 18, offset: 4}} xs={{span: 20, offset: 2}}>
                         <FormItem>
                             {getFieldDecorator('password', {
                                 rules: [{required: true, message: '请输入密码'}],
@@ -41,10 +44,11 @@ class Login extends Component {
                         </FormItem>
                     </Col></Row>
                 <Row>
-                    <Col span={8} offset={8}>
+                    <Col xxl={{span: 8, offset: 8}} xl={{span: 8, offset: 8}} lg={{span: 12, offset: 6}}
+                         sm={{span: 18, offset: 4}} xs={{span: 20, offset: 2}}>
                         <FormItem>
                             <Button type="primary" htmlType="submit" block>
-                                Log in
+                                登 录
                             </Button>
                         </FormItem>
                     </Col></Row>
@@ -56,6 +60,8 @@ class Login extends Component {
         let {login_msg} = this.props;
         if (login_msg !== "") {
             message.error(login_msg)
+            //去除store里的错误信息,防止组件更新再次出现提示
+            this.props.clearError()
         }
     }
 
@@ -83,6 +89,11 @@ const mapDispatch = (dispatch => ({//登录
         dispatch({
             type: 'login',
             value: data
+        })
+    },
+    clearError() {//清除store里的错误信息
+        dispatch({
+            type: 'clear_error'
         })
     }
 }))

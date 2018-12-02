@@ -12,3 +12,5 @@ src/page/login: 用户名&密码提交saga中间件处理,获取token存储到st
 src/mock: mock api数据(登录默认root,root)详见mock.js文件
 ```
 
+### 页面结构: 左(导航) 右(head+content)
+

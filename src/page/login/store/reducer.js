@@ -17,6 +17,10 @@ export default (state = defaultState, action) => {
                 token: '',
                 login_msg: '用户名或密码不正确'
             });
+        case 'clear_error'://清除错误信息
+            return state.set("login_msg", "");
+        case 'log_out'://退出登录
+            return state.set("token", "");
         default:
             return state;
 

@@ -1,4 +1,4 @@
-import {put, takeEvery} from 'redux-saga/effects';
+import {} from 'redux-saga/effects';
 
 function* saga() {
 

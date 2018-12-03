@@ -6,7 +6,9 @@ const defaultState = fromJS({
 
 export default (state = defaultState, action) => {
     switch (action.type) {
-
+        case "collapse":
+            return state.set("isCollapsed", action.value)
+        default:
+            return state;
     }
-    return state;
 }

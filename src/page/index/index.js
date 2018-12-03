@@ -1,28 +1,48 @@
 import React, {Component} from "react";
 import Nav from '../../component/nav';
 import Head from '../../component/head';
-import {Row, Col} from 'antd';
+import {Layout} from 'antd';
+import {connect} from 'react-redux';
 import './index.styl';
+
+const {
+    Sider, Content,
+} = Layout;
 
 /*后台管理总页面*/
 class Index extends Component {
     render() {
         return (
             <div className="container">
-                <Row>
-                    {/*左侧*/}
-                    <Col span={3}>
+                <Layout>
+                    <Sider breakpoint="md"
+                           collapsible={true}
+                           collapsed={this.props.isCollapsed}
+                           trigger={null}
+                           onBreakpoint={(broken) => {
+                               this.props.changeCollapse(broken)
+                           }}>
                         <div className="logo">logo</div>
                         <Nav/>
-                    </Col>
-                    {/*右侧*/}
-                    <Col>
+                    </Sider>
+                    <Content>
                         <Head/>
-                    </Col>
-                </Row>
+                    </Content>
+                </Layout>
             </div>
         )
     }
 }
 
-export default Index;
+const mapState = (state) => ({
+    isCollapsed: state.getIn(["nav", "isCollapsed"])
+})
+const mapDispatch = (dispatch) => ({
+    changeCollapse(broken) {//折叠or展开
+        dispatch({
+            type: 'collapse',
+            value: broken
+        })
+    }
+})
+export default connect(mapState, mapDispatch)(Index);

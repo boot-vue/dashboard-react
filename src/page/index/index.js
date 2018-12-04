@@ -27,6 +27,7 @@ class Index extends Component {
                     </Sider>
                     <Content>
                         <Head/>
+                        {this.props.children}
                     </Content>
                 </Layout>
             </div>

@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 import {connect} from 'react-redux';
 import Login from './page/login';
 import Index from "./page/index";
 import Home from "./component/home";
+import Test from './component/test';
 
 /*路由控制*/
 class App extends Component {
 
     render() {
-        let {token} = this.props;//用户token
-        if (token === "") {//token无效
+        let token = localStorage.getItem("token");//用户token
+        if (!token) {//token无效
             return (
                 <Router>
                     <Switch>
@@ -20,27 +21,20 @@ class App extends Component {
                 </Router>
             )
         } else {//存在token
+            this.props.init(token)
             return (
                 <Router>
-                    <Switch>
-                        <Route path="/index" render={() => {
-                            return (
-                                <Index>
-                                    <Switch>
-                                        <Route path="/home" component={Home}/>
-                                        <Redirect to="/home"/>
-                                    </Switch>
-                                </Index>
-                            )
-                        }}/>
-                        <Route render={() => {//默认路由
-                            return (
-                                <Index>
-                                    <Home/>
-                                </Index>
-                            )
-                        }}/>
-                    </Switch>
+                    <Route path="/" render={() => {
+                        return (
+                            <Index>
+                                <Switch>
+                                    <Route exact path="/index/home" component={Home}/>
+                                    <Route exact path="/index/test" component={Test}/>
+                                    <Redirect to="/index/home"/>
+                                </Switch>
+                            </Index>
+                        )
+                    }}/>
                 </Router>
             )
         }
@@ -52,7 +46,12 @@ const mapState = (state) => ({
 })
 
 const mapDispatch = (dispatch) => ({
-    //
+    init(token) {
+        dispatch({
+            type: 'init_token',
+            value: token
+        })
+    }
 })
 
 export default connect(mapState, mapDispatch)(App);

@@ -1,47 +1,57 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Menu, Icon} from 'antd';
+import {Link, withRouter} from 'react-router-dom';
 
 import './index.styl';
 
 const SubMenu = Menu.SubMenu;
 
 class Nav extends Component {
+    constructor(props) {
+        super(props);
+        const {location} = this.props;
+        let pathname = location.pathname;
+        if (pathname === "/login") {
+            pathname = "/index/home";
+        }
+        this.state = {
+            defaultSelectedKeys: pathname
+        }
+
+    }
+
     render() {
         return (
             <Menu
-                defaultSelectedKeys={['1']}
+                defaultSelectedKeys={[this.state.defaultSelectedKeys]}
                 defaultOpenKeys={['sub1']}
                 mode="inline"
                 theme="dark"
                 inlineCollapsed={false}
                 className="menu"
             >
-                <Menu.Item key="1">
-                    <Icon type="pie-chart"/>
-                    <span>Option 1</span>
+                <Menu.Item key="/index/home">
+                    <Link to="/index/home">
+                        <Icon type="pie-chart"/>
+                        <span>首页</span>
+                    </Link>
                 </Menu.Item>
-                <Menu.Item key="2">
-                    <Icon type="desktop"/>
-                    <span>Option 2</span>
+                <Menu.Item key="/index/test">
+                    <Link to="/index/test">
+                        <Icon type="desktop"/>
+                        <span>测试页</span>
+                    </Link>
                 </Menu.Item>
                 <Menu.Item key="3">
-                    <Icon type="inbox"/>
-                    <span>Option 3</span>
+                    <Link to="">
+                        <Icon type="inbox"/>
+                        <span>33333</span>
+                    </Link>
                 </Menu.Item>
-                <SubMenu key="sub1" title={<span><Icon type="mail"/><span>Navigation One</span></span>}>
-                    <Menu.Item key="5">Option 5</Menu.Item>
-                    <Menu.Item key="6">Option 6</Menu.Item>
-                    <Menu.Item key="7">Option 7</Menu.Item>
-                    <Menu.Item key="8">Option 8</Menu.Item>
-                </SubMenu>
-                <SubMenu key="sub2" title={<span><Icon type="appstore"/><span>Navigation Two</span></span>}>
-                    <Menu.Item key="9">Option 9</Menu.Item>
-                    <Menu.Item key="10">Option 10</Menu.Item>
-                    <SubMenu key="sub3" title="Submenu">
-                        <Menu.Item key="11">Option 11</Menu.Item>
-                        <Menu.Item key="12">Option 12</Menu.Item>
-                    </SubMenu>
+                <SubMenu key="sub1" title={<span><Icon type="mail"/><span>系统管理</span></span>}>
+                    <Menu.Item key="5"><Link to=""><span>111111</span></Link></Menu.Item>
+                    <Menu.Item key="6"><Link to=""><span>2222</span></Link></Menu.Item>
                 </SubMenu>
             </Menu>
         );
@@ -54,4 +64,4 @@ const mapState = (state) => ({
     isCollapsed: state.getIn(["nav", "isCollapsed"]) //是否是收起状态
 })
 
-export default connect(mapState, null)(Nav);
+export default connect(mapState, null)(withRouter(Nav));
